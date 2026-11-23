@@ -22,10 +22,12 @@ public class TasksRepository {
     }
 
     public Task insertTask(Task task) {
-        dsl.insertInto(TASKS)
+        var record = dsl.insertInto(TASKS)
                 .columns(TASKS.NAME, TASKS.DESCRIPTION)
                 .values(task.getName(), task.getDescription())
-                .execute();
+                .returning(TASKS.ID)
+                .fetchOne();
+        task.setId(record.getId());
         return task;
     }
 }
