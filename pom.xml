@@ -22,10 +22,6 @@
         <jooq.version>3.20.3</jooq.version>
         <liquibase.version>4.33.0</liquibase.version>
         <postgresql.version>42.7.8</postgresql.version>
-
-        <db.url>jdbc:postgresql://localhost:5432/task-tracker</db.url>
-        <db.username>postgres</db.username>
-        <db.password>postgres</db.password>
     </properties>
 
     <dependencyManagement>
@@ -142,6 +138,23 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
+            <!-- reads datasource settings from application.properties so liquibase and jOOQ codegen use the same DB -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals><goal>read-project-properties</goal></goals>
+                        <configuration>
+                            <files>
+                                <file>${project.basedir}/src/main/resources/application.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- applies migrations before jOOQ codegen, so generated classes always match the schema -->
             <plugin>
                 <groupId>org.liquibase</groupId>
@@ -157,9 +170,9 @@
                 <configuration>
                     <changeLogDirectory>${project.basedir}/src/main/resources</changeLogDirectory>
                     <changeLogFile>db/changeLog.xml</changeLogFile>
-                    <url>${db.url}</url>
-                    <username>${db.username}</username>
-                    <password>${db.password}</password>
+                    <url>${quarkus.datasource.jdbc.url}</url>
+                    <username>${quarkus.datasource.username}</username>
+                    <password>${quarkus.datasource.password}</password>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -183,9 +196,9 @@
                 <configuration>
                     <jdbc>
                         <driver>org.postgresql.Driver</driver>
-                        <url>${db.url}</url>
-                        <user>${db.username}</user>
-                        <password>${db.password}</password>
+                        <url>${quarkus.datasource.jdbc.url}</url>
+                        <user>${quarkus.datasource.username}</user>
+                        <password>${quarkus.datasource.password}</password>
                     </jdbc>
                     <generator>
                         <database>
