@@ -10,7 +10,6 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import ru.iposhka.model.Task;
 import ru.iposhka.service.TasksService;
 
@@ -19,9 +18,6 @@ import ru.iposhka.service.TasksService;
 public class TaskController {
 
     private final TasksService tasksService;
-    @Inject
-    @ConfigProperty(name = "quarkus.rest.path", defaultValue = "/api/v1")
-    String restPrefix;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -36,7 +32,7 @@ public class TaskController {
     public Response createTask(Task task) {
         task = tasksService.createTask(task);
         return Response.status(Status.CREATED)
-                .location(URI.create(restPrefix + "/tasks/%s".formatted(task.getId().toString())))
+                .location(URI.create("/tasks/%s".formatted(task.getId().toString())))
                 .entity(task)
                 .build();
     }
