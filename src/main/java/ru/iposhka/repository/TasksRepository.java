@@ -20,4 +20,12 @@ public class TasksRepository {
                 .fetch(r -> new Task(r.getId(), r.getName(), r.getDescription(),
                         r.getCreatedAt(), r.getUpdatedAt(), r.getDeletedAt()));
     }
+
+    public Task insertTask(Task task) {
+        dsl.insertInto(TASKS)
+                .columns(TASKS.NAME, TASKS.DESCRIPTION)
+                .values(task.getName(), task.getDescription())
+                .execute();
+        return task;
+    }
 }

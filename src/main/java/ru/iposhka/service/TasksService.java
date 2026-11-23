@@ -15,4 +15,8 @@ public class TasksService {
     public List<Task> getTasks() {
         return tasksRepository.findAll();
     }
+
+    public Task createTask(Task task) {
+        return tasksRepository.insertTask(task);
+    }
 }

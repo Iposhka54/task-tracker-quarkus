@@ -2,6 +2,7 @@ package ru.iposhka.model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import javax.security.sasl.AuthorizeCallback;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
