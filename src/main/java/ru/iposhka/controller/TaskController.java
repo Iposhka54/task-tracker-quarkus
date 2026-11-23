@@ -1,12 +1,12 @@
 package ru.iposhka.controller;
 
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import java.util.List;
+import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
-import ru.iposhka.model.Task;
 import ru.iposhka.service.TasksService;
 
 @Path("/tasks")
@@ -17,7 +17,9 @@ public class TaskController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Task> getTasks() {
-        return tasksService.getTasks();
+    public Response getTasks() {
+        return Response.ok()
+                .entity(tasksService.getTasks())
+                .build();
     }
 }
