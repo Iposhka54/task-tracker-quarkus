@@ -1,5 +1,6 @@
 package ru.iposhka.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -13,5 +14,6 @@ public class Task {
     private String description;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    @JsonIgnore
     private LocalDateTime deletedAt;
 }
