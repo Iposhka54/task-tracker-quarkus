@@ -1,11 +1,8 @@
 package ru.iposhka.controller;
 
-import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import java.net.URI;
@@ -20,7 +17,6 @@ public class TaskController {
     private final TasksService tasksService;
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getTasks() {
         return Response.ok()
                 .entity(tasksService.getTasks())
@@ -28,7 +24,6 @@ public class TaskController {
     }
 
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
     public Response createTask(Task task) {
         task = tasksService.createTask(task);
         return Response.status(Status.CREATED)
